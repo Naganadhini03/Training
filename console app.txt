@@ -1,0 +1,99 @@
+
+using System;
+using System.Collections.Generic;
+
+namespace EmployeeManagementSystem
+{
+class Employee{
+    public int Id { get; set;}
+    public string Name {get; set;}
+    public double Salary {get; set;}
+    
+    public Employee(int id, string name, double salary)
+    {
+        Id=id;
+        Name=name;
+        Salary=salary;
+    }
+    
+    public virtual void DisplayDetails()
+    {
+        Console.WriteLine("ID:" +Id);
+        Console.WriteLine("Name:" +Name);
+        Console.WriteLine("Salary:" +Salary);
+    }
+}
+
+class FullTimeEmployee : Employee
+{
+    public string Benefits{get; set;}
+    public FullTimeEmployee(int id, string name, double salary, string benefits) : base(id,name,salary)
+    {
+        Benefits = benefits;
+    }
+    public override void DisplayDetails()
+    {
+        base.DisplayDetails();
+        Console.WriteLine("Benefits: " +Benefits);
+    }
+}
+
+class PartTimeEmployee: Employee{
+    public int HoursWorked {get; set;}
+    public PartTimeEmployee(int id,string name,double salary,int hoursWorked) : base(id,name,salary)
+    {
+        HoursWorked=hoursWorked;
+    }
+    public override void DisplayDetails()
+    {
+        base.DisplayDetails();
+        Console.WriteLine("Hours Worked: " +HoursWorked);
+    }
+}
+
+class Program{
+    static void Main(String[] args)
+    {
+        string validUsername = "admin";
+        string validPassword = "password";
+        Console.WriteLine("Welcome to the Employeee Management System");
+        Console.WriteLine("------------------------------------------");
+        
+        bool isAuthenticated = false;
+        while(!isAuthenticated)
+        {
+            Console.Write("Enter Username: ");
+            string username = Console.ReadLine();
+            
+            Console.Write("Enter Password: ");
+            string password = Console.ReadLine();
+            
+            if (username == validUsername && password ==  validPassword)
+            {
+                isAuthenticated = true;
+                Console.WriteLine("\nLogin Successful!\n");
+            }
+            else{
+                Console.WriteLine("Invalid credentials. Please try again. \n");
+            }
+        }
+        List<Employee> employees = new List<Employee>
+        {
+            new FullTimeEmployee(1,"Kavya", 60000,"Health Insurance"),
+            new PartTimeEmployee(2,"Lakshmi", 20000, 20),
+            new FullTimeEmployee(3,"Harini", 75000, "Retirement Plan"),
+            new PartTimeEmployee(4,"Jaya", 15000,15)
+        };
+        Console.WriteLine("Employee Details:");
+        Console.WriteLine("-----------------");
+        foreach(var employee in employees)
+        {
+            employee.DisplayDetails();
+            Console.WriteLine();
+        }
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
+    }
+}
+}
+
